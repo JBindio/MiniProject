@@ -13,9 +13,9 @@
     
         <link rel="stylesheet" type="text/css"
             href = "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+
         <link rel="stylesheet" type="text/css"
-            href = "{% static 'surveyapp/css/style.css' %}">
-        
+            href = "{% static 'surveyapp/css/main_style.css' %}">
     </head>
 
     <!-- BODY(본문) -->
@@ -24,31 +24,35 @@
         <!-- 링크주소 = URL 주소 -->
         <!-- 한곳에서 관리할수 있도록 include 처리 -->
         {% include 'surveyapp/include/bootstrap_nav.html'%}
-        <hr id="hr">
+        <!-- <hr id="hr"> -->
     <center>
-    <div style = "max-width: 100%; display: grid; grid-template-columns: 3fr 3fr 3fr; padding :20px;">
-        <div>
-            
-            <h1> 이정빈 </h1>
-            <div style="background-color: #F2B117;">
-            <img src="{% static 'surveyapp/images/bin.png' %}" width="35%" style="float: left; ">
-            </div>   
+    <div id="main">
+        <div id="hyundiv">
+            <img id="hyun" src="{% static 'surveyapp/images/hyun3.png' %}" width="50%">
         </div>
-        <div>
-            <h1> 허아현 </h1>
-            <img src="{% static 'surveyapp/images/hyun.png' %}" width="35%">
-            <h1> 아현좌 </h1>
-
+        <div id="bindiv">
+            <img id="bin" src="{% static 'surveyapp/images/bin1.png' %}" width="50%"> 
         </div>
-        <div>
-            <h1> 김동주 </h1>
-            <img src="{% static 'surveyapp/images/img.png' %}" width="30%">
-            <h1> 토트넘 망해라 </h1>
-
+        <div id="judiv">
+            <img id="ju" src="{% static 'surveyapp/images/ju.png' %}" width="50%">
         </div>
     </div>
-    </center>
-        
+
+    <hr>
+
+    <p style="font-weight: bold;">
+        (주)한국품질재단
+    </p>
+    <p>
+        TEL : 000-000-000
+    </p>
+    <p>
+        H.P : 000-0000-0000
+    </p>
+    <p>
+        E-MAIL : AAA@BBB.CCC
+    </p>
+    </center>  
         <!-- 이미지 넣기 -->
         <!-- src : 이미지 위치(웹 경로) -->
         
