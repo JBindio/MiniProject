@@ -25,12 +25,8 @@
     <!-- 한곳에서 관리할수 있도록 include 처리 -->
     {% include 'surveyapp/include/bootstrap_nav.html'%}
     <center>
-        <h1 style="margin: 30px;"><b>연도별 최저임금 현황</b></h1>
-        <hr>
-            <br>
-            {% include 'surveyapp/include/part1_01_slide.html'%}
-            <br>
-        </div>
+        <h1 style="margin: 30px;"><b>Employer List</b></h1>
+    {% include 'surveyapp/include/footer.html'%}
     </center>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
@@ -40,7 +36,3 @@
                 integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" 
                 crossorigin="anonymous"></script>   
 </body>
-
-<footer>
-    {% include 'surveyapp/include/footer.html'%}
-</footer>

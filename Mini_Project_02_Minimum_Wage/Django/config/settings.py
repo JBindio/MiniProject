@@ -120,7 +120,7 @@ USE_TZ = True
 # img, css, js등 정적 파일 저장공간 지정
 STATIC_URL = 'static/'
 # 디렉토리 지정
-STATICFILES_DIS = [
+STATICFILES_DIRS = [
     BASE_DIR / 'static',
 ]
 

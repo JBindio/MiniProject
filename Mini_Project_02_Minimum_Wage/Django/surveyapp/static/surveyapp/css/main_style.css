@@ -1,20 +1,17 @@
-body {margin: 0; background-color: #EEEEEE;
+html{margin: 0px; padding: 0px;}
+
+body{background-color: #EEEEEE;
 }
-#hr {margin: 0;
-}
-#main {max-width: 100%; display: grid; 
+
+#main{max-width: 100%; display: grid; 
        grid-template-columns: 3fr 3fr 3fr;
 }
-#bin{background-color: #EEEEEE;
+
+.name{font-size: 20px; font-weight: bold;}
+
+.info{background-color: #343333; color: #eeeeee; padding-top: 20px;}
+
+.last{margin-bottom: 0; padding-bottom: 10px;}
+
+fieldset{color:#343333; margin: 30px;
 }
-#hyun{background-color: #EEEEEE;
-}
-#ju{background-color: #EEEEEE;
-}
-/* 
-#bindiv{background-color: #343333;
-}
-#hyundiv{background-color: #343333;
-}
-#judiv{background-color: #343333;
-} */
