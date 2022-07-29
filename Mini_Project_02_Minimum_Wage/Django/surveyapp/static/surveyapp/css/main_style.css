@@ -3,7 +3,7 @@ html{margin: 0px; padding: 0px;}
 body{background-color: #EEEEEE;
 }
 
-#main{max-width: 100%; display: grid; 
+#grid{max-width: 100%; display: grid; 
        grid-template-columns: 3fr 3fr 3fr;
 }
 
