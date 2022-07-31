@@ -1,5 +1,6 @@
 # django 가상환경에서 cx_Oracle 설치해야합니다.
 # 설치 : 가상환경 프롬프트 > pip install cx_oracle
+from unittest import result
 import cx_Oracle
 import pandas as pd
 
@@ -147,7 +148,7 @@ def getSurveyEmployerList() :
     conn = getConnection()
     cursor = getCursor(conn)
     
-    sql ="""SELECT * 
+    sql ="""SELECT q1
               FROM survey_employer
             """
     cursor.execute(sql)
@@ -160,16 +161,31 @@ def getSurveyEmployerList() :
         col.append(i[0].lower())
     
     dbClose(cursor, conn)
+
+# 오라클 데이터 > 데이터 프레임
     df = pd.DataFrame(row, columns = col)
+    df = df.astype(int)
+    # df_list = [1,2,3,4,5,2,1,2,3,4,3,3,2,3,5,3,2,3,2,1,2,5,4,3,2,2,1,1,3,4,5,4,4,3,3,1,2,3,4]
+    # df = pd.DataFrame(columns=['q1'])
+    # df['q1'] = df_list
     
-    return df
+# 만족도 결과 데이터 프레임 생성  
+    df_col = ['만족','불만족','보통']
+    result_df = pd.DataFrame(columns = df_col)
+    result_df['불만족'] = [len(df[df['q1']<=2])]
+    result_df['만족'] = [len(df[df['q1']>=4])]
+    result_df['보통'] = [len(df[df['q1']==3])]
+    
+    result_df = result_df.T.reset_index()
+    
+    return result_df
 # -------------------------------------------------------------------------------------------  
 # 근로자 설문조사 리스트
 def getSurveyWorkerList() :
     conn = getConnection()
     cursor = getCursor(conn)
     
-    sql ="""SELECT * 
+    sql ="""SELECT q1
               FROM survey_worker
             """
     cursor.execute(sql)
@@ -182,9 +198,18 @@ def getSurveyWorkerList() :
         col.append(i[0].lower())
     
     dbClose(cursor, conn)
-    df = pd.DataFrame(row, columns = col)
     
-    return df
-
-
-
+# 오라클 데이터 > 데이터 프레임
+    df = pd.DataFrame(row, columns = col)
+    df = df.astype(int)
+# 만족도 결과 데이터 프레임 생성  
+    df_col = ['만족','불만족','보통']
+    result_df = pd.DataFrame(columns = df_col)
+    result_df['불만족'] = [len(df[df['q1']<=2])]
+    result_df['만족'] = [len(df[df['q1']>=4])]
+    result_df['보통'] = [len(df[df['q1']==3])]
+    
+    result_df = result_df.T.reset_index()
+    
+    return result_df
+# -------------------------------------------------------------------------------------------  

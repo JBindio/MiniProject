@@ -14,6 +14,7 @@
             href = "https://getbootstrap.kr/docs/5.0/dist/css/bootstrap.min.css">
     
         <link rel="stylesheet" type="text/css"
+
             href = "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
         <link rel="stylesheet" type="text/css"
             href = "{% static 'surveyapp/css/slide_style.css' %}">
@@ -24,14 +25,14 @@
     <!-- 링크주소 = URL 주소 -->
     <!-- 한곳에서 관리할수 있도록 include 처리 -->
     {% include 'surveyapp/include/bootstrap_nav.html'%}
-    
     <center>
-        <h1 style="margin: 30px;"><b>Worker List</b></h1>
-        {%for data in df%}
-        <p>{{data.Q1}}</p>
-        {% endfor %}
+        <h1 style="margin: 30px;"><b>연도별 서비스직 근로자수 현황</b></h1>
+        <hr>
+            <br>
+            {% include 'surveyapp/include/part2_01_slide.html'%}
+            <br>
+        </div>
     </center>
-    
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>

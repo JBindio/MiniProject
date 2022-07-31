@@ -1,6 +1,17 @@
 
 from django.http import HttpResponse
 from django.shortcuts import render
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import matplotlib
+from matplotlib import font_manager, rc
+from pyparsing import col
+import seaborn as sns
+from seaborn.distributions import distplot
+import platform
+from scipy import stats
+
 from .model_survey import survey
 
 # -------------------------------------------------------------------------------------------
@@ -32,6 +43,18 @@ def part1_02(request):
 def part1_03(request):
     return render(request,
            'surveyapp/part1_03.html',
+           {})
+# -------------------------------------------------------------------------------------------
+# Part2_01 연도별 서비스직 근로자수 현황
+def part2_01(request):
+    return render(request,
+           'surveyapp/part2_01.html',
+           {})
+# -------------------------------------------------------------------------------------------
+# Part2_02 연도별 서비스직 근로시간 현황
+def part2_02(request):
+    return render(request,
+           'surveyapp/part2_02.html',
            {})
 # -------------------------------------------------------------------------------------------
 # 설문조사 폼
@@ -137,7 +160,7 @@ def view_Survey_Worker_List(request) :
     df = survey.getSurveyWorkerList()
     
     # return HttpResponse(df.to_html())
-    context = {"df" : df.to_html}
+    context = {"df" : df}
     
     return render(
         request,
@@ -145,3 +168,76 @@ def view_Survey_Worker_List(request) :
         context
     )
 # -------------------------------------------------------------------------------------------
+#  고용주 만족도 조사 결과 시각화 및 저장하기(함수로 처리)
+def view_Employer_Result_Visualization(result_df) :
+    
+    ylist = np.arange(0,(result_df[0].max() + 5),5)
+    
+    plt.figure(figsize=(13,10))
+    plt.rc('font', family = 'Malgun Gothic', size = 20)
+    
+    fig = plt.gcf()
+    fig.set_facecolor('#EEEEEE')
+    plt.gca().set_facecolor('#EEEEEE')
+
+    plt.title('최저임금에 대한 고용주 만족도',fontsize = 25,loc='center', pad=30, fontweight="bold")
+
+    plt.bar(result_df['index'],result_df[0],width=0.5, color =['navy','darkred','#F2B117'])
+
+    plt.yticks(ylist)
+
+    for i, v in enumerate(result_df['index']):
+        plt.text(v, result_df[0][i], result_df[0][i],
+                fontsize = 18,
+                color='black',
+                horizontalalignment='center',  # horizontalalignment (left, center, right)
+                verticalalignment='bottom')    # verticalalignment (top, center, bottom)
+        
+    # 그래프 저장하기
+    fig.savefig('surveyapp/static/surveyapp/images/result/employer_result.png')
+# -------------------------------------------------------------------------------------------
+#  근로자 만족도 조사 결과 시각화 및 저장하기(함수로 처리)
+def view_Worker_Result_Visualization(result_df) :
+    ylist = np.arange(0,(result_df[0].max() + 5),5)
+    
+    plt.figure(figsize=(13,10))
+    
+    plt.rc('font', family = 'Malgun Gothic', size = 20)
+    
+    fig = plt.gcf()
+    fig.set_facecolor('#EEEEEE')
+    plt.gca().set_facecolor('#EEEEEE')
+
+    plt.title('최저임금에 대한 근로자 만족도',fontsize = 25,loc='center', pad=30, fontweight="bold")
+
+    plt.bar(result_df['index'],result_df[0],width=0.5, color =['navy','darkred','#F2B117'])
+
+    plt.yticks(ylist)
+
+    for i, v in enumerate(result_df['index']):
+        plt.text(v, result_df[0][i], result_df[0][i],
+                fontsize = 18,
+                color='black',
+                horizontalalignment='center',  # horizontalalignment (left, center, right)
+                verticalalignment='bottom')    # verticalalignment (top, center, bottom)
+        
+    # 그래프 저장하기
+    fig.savefig('surveyapp/static/surveyapp/images/result/worker_result.png')
+# -------------------------------------------------------------------------------------------
+# 분석결과 페이지
+def view_Survey_Result(request) :
+    
+    ## 설문 데이터 조회하기
+    employer_df = survey.getSurveyEmployerList()
+    worker_df = survey.getSurveyWorkerList()
+    
+    # 시각화 및 저장(함수로 처리)
+    view_Employer_Result_Visualization(employer_df)
+    view_Worker_Result_Visualization(worker_df)
+        
+    return render(
+        request,
+        'surveyapp/survey_result.html',
+        {}
+    )
+# ----------------------------------------------------------------------------------------------------------
