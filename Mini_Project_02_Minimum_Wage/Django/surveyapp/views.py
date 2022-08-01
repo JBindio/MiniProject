@@ -57,6 +57,18 @@ def part2_02(request):
            'surveyapp/part2_02.html',
            {})
 # -------------------------------------------------------------------------------------------
+# Part3_01 전년도 만족도 현황
+def part3_01(request):
+    return render(request,
+           'surveyapp/part3_01.html',
+           {})
+# -------------------------------------------------------------------------------------------
+# Part3_02 인력대체기술 현황현황
+def part3_02(request):
+    return render(request,
+           'surveyapp/part3_02.html',
+           {})
+# -------------------------------------------------------------------------------------------
 # 설문조사 폼
 def survey_form(request):
     return render(request,
@@ -101,7 +113,7 @@ def set_Survey_Employer_Insert(request) :
     if rs == "OK" :
         msg = """<script>
                     alert('설문에 참여해 주셔서 감사합니다')
-                    location.href = '/survey/survey_employer_list'
+                    location.href = '/survey/survey_end'
                     </script>"""
     else: 
         msg = """<script>
@@ -109,20 +121,6 @@ def set_Survey_Employer_Insert(request) :
                     history.go(-1)
                     </script>"""
     return HttpResponse(msg)
-# -------------------------------------------------------------------------------------------
-# 고용주 설문 전체 조회
-def view_Survey_Employer_List(request) :
-    
-    df = survey.getSurveyEmployerList()
-    
-    # return HttpResponse(df.to_html())
-    context = {"df" : df.to_html}
-    
-    return render(
-        request,
-        "surveyapp/survey_employer_list.html",
-        context
-    )
 # -------------------------------------------------------------------------------------------
 # 입력한 근로자 설문 DB 저장
 def set_Survey_Worker_Insert(request) :
@@ -145,7 +143,7 @@ def set_Survey_Worker_Insert(request) :
     if rs == "OK" :
         msg = """<script>
                     alert('설문에 참여해 주셔서 감사합니다')
-                    location.href = '/survey/survey_worker_list'
+                    location.href = '/survey/survey_end/'
                     </script>"""
     else: 
         msg = """<script>
@@ -154,8 +152,8 @@ def set_Survey_Worker_Insert(request) :
                     </script>"""
     return HttpResponse(msg)
 # -------------------------------------------------------------------------------------------
-# 근로자 설문 전체 조회
-def view_Survey_Worker_List(request) :
+# 설문종료
+def view_Survey_End(request) :
     
     df = survey.getSurveyWorkerList()
     
@@ -164,11 +162,11 @@ def view_Survey_Worker_List(request) :
     
     return render(
         request,
-        "surveyapp/survey_worker_list.html",
+        "surveyapp/survey_end.html",
         context
     )
 # -------------------------------------------------------------------------------------------
-#  고용주 만족도 조사 결과 시각화 및 저장하기(함수로 처리)
+#  고용주 만족도 조사 결과 시각화 및 저장하기
 def view_Employer_Result_Visualization(result_df) :
     
     ylist = np.arange(0,(result_df[0].max() + 5),5)
@@ -188,7 +186,7 @@ def view_Employer_Result_Visualization(result_df) :
 
     for i, v in enumerate(result_df['index']):
         plt.text(v, result_df[0][i], result_df[0][i],
-                fontsize = 18,
+                fontsize = 30,
                 color='black',
                 horizontalalignment='center',  # horizontalalignment (left, center, right)
                 verticalalignment='bottom')    # verticalalignment (top, center, bottom)
@@ -216,7 +214,7 @@ def view_Worker_Result_Visualization(result_df) :
 
     for i, v in enumerate(result_df['index']):
         plt.text(v, result_df[0][i], result_df[0][i],
-                fontsize = 18,
+                fontsize = 30,
                 color='black',
                 horizontalalignment='center',  # horizontalalignment (left, center, right)
                 verticalalignment='bottom')    # verticalalignment (top, center, bottom)
@@ -224,7 +222,7 @@ def view_Worker_Result_Visualization(result_df) :
     # 그래프 저장하기
     fig.savefig('surveyapp/static/surveyapp/images/result/worker_result.png')
 # -------------------------------------------------------------------------------------------
-# 분석결과 페이지
+# 만족도 조사결과 페이지
 def view_Survey_Result(request) :
     
     ## 설문 데이터 조회하기
